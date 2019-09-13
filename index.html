@@ -8,13 +8,16 @@
 </body>
 
 <div id="usercont">
+    <ul id="chatMessages">
+        <ul id="listitems"></ul>
+    </ul>
 
-
-        <input type = "text" id = "user" placeholder = "Username">
 
 
 </div>
 <div id = "fieldForMessages">
+    <input type = "text" id = "user" placeholder = "Username">
+
     <input type = "text" id = "newMessage" placeholder = "Some Message">
     <button id ="submitMessageButton">Submit message</button>
 </div>
@@ -24,9 +27,57 @@
     </div>
 </body>
 </html>
-
+<stript src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</stript>
 <script>
-    $("#submitMessageButton").click(sendMessage)
-    messageToSend = $("#newMessage").val();
-    user=$("#user").val();
+    $(document).ready(function () {
+        $("#submitMessageButton").click(function () {
+            messageToSend = $("#newMessage").val();
+            user=$("#user").val();
+            if (messageToSend == null || messageToSend == "") {
+                alert("Can't send an empty message :(");
+                return;
+            }
+            if (userName == null) {
+                alert("Please enter a user first!");
+                return;
+            }
+            $.post("index.php",{
+                    author:user,
+                    content:messageToSend,
+                },
+                res => {console.log(res)})
+
+        });
+        messageTimer();
+    });
+
+    function messageTimer() {
+        setTimeout(function () {
+
+            // existingElements = existingElements+1
+
+            getMessage();
+
+        }, 30000);
+
+    }
+    function getMessage() {
+        $.ajax({
+            method: "GET",
+            url: "index.php",
+            success: data => {
+                printMessage(data)
+            }
+        })
+    }
+    function printMessage(data) {
+        $("#chatMessages").empty();
+        let messageCreator = data.author;
+        let messageContent= data.content;
+        let text = messageCreator + " wrote: " + messageContent ;
+        let tempMessage = $("<li >" + text + "</li>");
+        $("#chatMessages").append(tempMessage);
+    }
+
 </script>
