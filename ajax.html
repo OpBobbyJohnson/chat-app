@@ -1,0 +1,14 @@
+<stript src="ttps://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</stript>
+<script>
+    $.ajax({
+        method: "GET",
+        url: "index.php",
+        success: data=>{ console.log(data)}
+    })
+    $.post("index.php",{
+        name:"PUT_NAME_HERE",
+        content:"STUFF HERE"
+    },
+    res => {console.log(res)})
+</script>
