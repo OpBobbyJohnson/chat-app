@@ -6,7 +6,7 @@
 
 
 
-    $routes = explode("/",$uri;
+    $routes = explode("/",$uri);
 
     
     $dbhandle = new PDO("sqlite:database.sqlite") or die("Failed to open DB");
